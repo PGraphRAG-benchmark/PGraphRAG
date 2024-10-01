@@ -1,0 +1,98 @@
+[
+    {
+        "filename": "results_dev_user_k3.json",
+        "result": {
+            "rouge-1": 0.106,
+            "rouge-L": 0.102,
+            "meteor": 0.093
+        }
+    },
+    {
+        "filename": "results_dev_both_k5.json",
+        "result": {
+            "rouge-1": 0.136,
+            "rouge-L": 0.13,
+            "meteor": 0.109
+        }
+    },
+    {
+        "filename": "results_dev_neighbor_k5.json",
+        "result": {
+            "rouge-1": 0.139,
+            "rouge-L": 0.133,
+            "meteor": 0.112
+        }
+    },
+    {
+        "filename": "results_dev_user_k2.json",
+        "result": {
+            "rouge-1": 0.108,
+            "rouge-L": 0.103,
+            "meteor": 0.093
+        }
+    },
+    {
+        "filename": "results_dev_all_k5.json",
+        "result": {
+            "rouge-1": 0.142,
+            "rouge-L": 0.136,
+            "meteor": 0.114
+        }
+    },
+    {
+        "filename": "results_dev_both_k2.json",
+        "result": {
+            "rouge-1": 0.13,
+            "rouge-L": 0.125,
+            "meteor": 0.106
+        }
+    },
+    {
+        "filename": "results_dev_neighbor_k3.json",
+        "result": {
+            "rouge-1": 0.133,
+            "rouge-L": 0.129,
+            "meteor": 0.111
+        }
+    },
+    {
+        "filename": "results_dev_all_k3.json",
+        "result": {
+            "rouge-1": 0.141,
+            "rouge-L": 0.137,
+            "meteor": 0.117
+        }
+    },
+    {
+        "filename": "results_dev_all_k2.json",
+        "result": {
+            "rouge-1": 0.134,
+            "rouge-L": 0.129,
+            "meteor": 0.112
+        }
+    },
+    {
+        "filename": "results_dev_user_k5.json",
+        "result": {
+            "rouge-1": 0.109,
+            "rouge-L": 0.105,
+            "meteor": 0.093
+        }
+    },
+    {
+        "filename": "results_dev_both_k3.json",
+        "result": {
+            "rouge-1": 0.133,
+            "rouge-L": 0.129,
+            "meteor": 0.108
+        }
+    },
+    {
+        "filename": "results_dev_neighbor_k2.json",
+        "result": {
+            "rouge-1": 0.129,
+            "rouge-L": 0.124,
+            "meteor": 0.107
+        }
+    }
+]
