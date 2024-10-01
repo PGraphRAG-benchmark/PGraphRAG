@@ -1,1 +1,4 @@
 *.json
+*.pkl
+data/MovieLens/
+.ipynb_checkpoints/
