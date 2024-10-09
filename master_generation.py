@@ -183,8 +183,7 @@ def generate_gpt(data, dataset, task, ranker, split, mode, k, client=None):
 
     results = []
 
-    # for profile in tqdm(data, desc=f'Generating for OUTPUT-{dataset}_{split}_{task}_GPT_{ranker}-{mode}_k{k}'):
-    for profile in tqdm(data, desc=f'Generating for OUTPUT-{dataset}_{split}_{task}_LLAMA_{ranker}-{mode}_k{k}'):
+    for profile in tqdm(data, desc=f'Generating for OUTPUT-{dataset}_{split}_{task}_GPT_{ranker}-{mode}_k{k}'):
         # Store user profile in a UserProfile object
         p = UserProfile(profile, dataset, task, ranker, split)
 
@@ -239,7 +238,7 @@ def generate_llama(data, dataset, task, ranker, split, mode, k, model=None):
         print(generation) # IF you want to watch as generations run
         results.append(generation)
 
-    # save results (PROBABLY WILL CHANGE)
+    # save results
     save_results(results, dataset, task, ranker, split, mode, k, "LLAMA")
 
     return
@@ -281,9 +280,10 @@ def partial_generate(data, dataset, task, ranker, split, model, modes=["none", "
             for mode in modes:
                 generate_llama(data, dataset, task, ranker, split, mode, k, model=llama3_model)
 
-# Function to load data from a (ranking) JSON file
-# example: b2w_data_dev_ranked_k_5_reviewText_bm25.json
 
+# Function to load data from a (ranking) JSON file
+# old example: b2w_data_dev_ranked_k_5_reviewText_bm25.json
+# new example: b2w_dev_reviewText_bm25.json
 '''
 #load data using old format
 def load_data(file_path):
