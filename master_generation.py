@@ -350,7 +350,7 @@ def parse_arguments():
     if args.model not in ['gpt', 'llama']:
         parser.error("Model must be 'gpt' or 'llama'")
 
-    if not os.path.isfile(args.input_file):
+    if not os.path.isfile(args.input):
         parser.error(f"Error: The file '{args.input}' does not exist.")
 
     return args
