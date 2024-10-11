@@ -20,7 +20,7 @@ This uses GPT to generate review text on the dev split of B2W, ranked by BM25 on
 
 - `--mode`: Mode(s) to generate on. **Optional**, default performs **all** modes.
   - Valid options:
-    ~~- `all`: **(Deprecated?)** Retrieves "all_ratings" for the prompt.~~
+    - ~~`all`: **(Deprecated?)** Retrieves "all_ratings" for the prompt.~~
     - `none`: Retrieves nothing for the prompt.
     - `user`: Retrieves "user_ratings" for the prompt.
     - `neighbor`: Retrieves "neighbor_ratings" for the prompt.
