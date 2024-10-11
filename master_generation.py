@@ -10,7 +10,7 @@ import argparse
 import sys
 
 class UserProfile:
-    def __init__(self, profile, dataset, task, ranker, split):
+    def __init__(self, profile, dataset, split, task, ranker):
 
         self.dataset = dataset
         self.task = task
@@ -30,9 +30,17 @@ class UserProfile:
         for review in profile['neighbor_ratings']:
             self.neighbor_ratings.append({"reviewTitle": review.get('reviewTitle', None), "reviewText": review.get("reviewText", None)})
 
+        
+        self.random_review = profile['random_review']
+
+
+        '''
+        # deprecated
         self.all_ratings = []
         for review in profile['all_ratings']:
             self.all_ratings.append({"reviewTitle": review.get('reviewTitle', None), "reviewText": review.get("reviewText", None)})
+        '''
+
 
 
     # Retrieve relevant part of main review based on task, return as formatted string
@@ -41,14 +49,10 @@ class UserProfile:
         if self.task == "reviewTitle":
             return f"Review text: '{self.user_review_text}'\n"
 
-        elif self.task == "reviewText": # ONLY FOR AMAZON AND B2W(, and yelp?)
-            if self.dataset == "google":
-                raise Exception(f"Google dataset not compatible with task: {self.task}")
+        elif self.task == "reviewText":
             return f"Review title: '{self.user_review_title}'\n"
 
         elif self.task == "reviewRating":
-            if self.dataset == "google":
-                return f"Review text: '{self.user_review_text}'\n"
             return f"Review title: '{self.user_review_title}', Review text: '{self.user_review_text}'\n"
 
 
@@ -58,11 +62,11 @@ class UserProfile:
         if mode == "user":
             retrieved = "User's Own Reviews:\n"
             for review in self.user_ratings[:k]:
+                rating = ""
+                if self.task == "reviewRating":
+                    rating += f", Review rating: {review['reviewRating']}"
 
-                if self.dataset == "google":
-                    context = f"Review text: \"{review['reviewText']}\"\n"
-                else: # dataset == "amazon" or "b2w"
-                    context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"\n"
+                context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
                 retrieved += context
 
             return retrieved
@@ -70,15 +74,35 @@ class UserProfile:
         elif mode == "neighbor":
             retrieved = "Other Users' Reviews:\n"
             for review in self.neighbor_ratings[:k]:
+                rating = ""
+                if self.task == "reviewRating":
+                    rating += f", Review rating: {review['reviewRating']}"
 
-                if self.dataset == "google":
-                    context = f"Review text: \"{review['reviewText']}\"\n"
-                else: # dataset == "amazon" or "b2w"
-                    context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"\n"
+                context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
                 retrieved += context
+
             return retrieved
 
+        elif mode == "random":
+            retrieved = "Random Review:\n"
+            review = self.random_review
 
+            rating = ""
+            if self.task == "reviewRating":
+                rating += f", Review rating: {review['reviewRating']}"
+
+            context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
+            retrieved += context
+
+            return retrieved            
+
+        elif mode == "none":
+            return ""
+
+        
+
+        '''
+        # deprecated
         elif mode == "all":
             retrieved = "Other Users' Reviews:\n"
             for review in self.all_ratings[:k]:
@@ -89,10 +113,7 @@ class UserProfile:
                     context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"\n"
                 retrieved += context
             return retrieved
-
-
-        elif mode == "none":
-            return ""
+        '''
 
     # Creates prompt for {task} on main review, with retrieval based on {mode} and {k}
     def create_prompt(self, mode, k):
@@ -102,8 +123,10 @@ class UserProfile:
         # Initialize intro based on mode
         if mode == "both":
             intro = "Given the following reviews from the same user and other users on the same product:\n"
-        elif mode == "all":
-            intro = "Given the following reviews from any user on any product:\n"
+        # elif mode == "all":
+        #     intro = "Given the following reviews from any user on any product:\n"
+        elif mode == "random":
+            intro = "Given a random review from any user on any product:\n"
         elif mode == "user":
             intro = "Given the following reviews from the user on different products:\n"
         elif mode == "neighbor":
@@ -136,13 +159,14 @@ class UserProfile:
             direction += "Generate the review text using the format: 'Review text:'."
 
         elif self.task == "reviewRating":
-            direction = "\nGenerate an integer rating for the following product from this user given the review title and text, without any explanation: "
+            direction = "\nGenerate an integer rating from 1-5 for the following product from this user given the review title and text, without any explanation: "
             direction += self.get_review() # append reviewTitle and reviewText for rating generation
             direction += "Generate the review rating using the format: 'Rating:'."
 
         prompt += direction
 
         return prompt
+
 
 # Function to use GPT to generate given a {prompt}
 def gpt_call(prompt, client):
@@ -171,7 +195,7 @@ def gpt_call(prompt, client):
 
 # CAN be used to generate a SINGLE results file, specifying mode and k
 # Function to generate {task} on {dataset}-{split} for 1 {mode} and 1 {k} with {ranker} using gpt
-def generate_gpt(data, dataset, task, ranker, split, mode, k, client=None):
+def generate_gpt(data, dataset, split, task, ranker, mode, k, client=None):
     print(f"Processing mode: {mode} with k={k} on GPT")
 
     if not client:
@@ -185,7 +209,7 @@ def generate_gpt(data, dataset, task, ranker, split, mode, k, client=None):
 
     for profile in tqdm(data, desc=f'Generating for OUTPUT-{dataset}_{split}_{task}_GPT_{ranker}-{mode}_k{k}'):
         # Store user profile in a UserProfile object
-        p = UserProfile(profile, dataset, task, ranker, split)
+        p = UserProfile(profile, dataset, split, task, ranker)
 
         # Synthesize prompt from profile based on task, mode, k
         prompt = p.create_prompt(mode, k)
@@ -196,7 +220,7 @@ def generate_gpt(data, dataset, task, ranker, split, mode, k, client=None):
         results.append(generation)
 
     # save results (PROBABLY WILL CHANGE)
-    save_results(results, dataset, task, ranker, split, mode, k, "GPT")
+    save_results(results, dataset, split, task, ranker, mode, k, "GPT")
 
 
     return
@@ -204,7 +228,7 @@ def generate_gpt(data, dataset, task, ranker, split, mode, k, client=None):
 
 # CAN be used to generate a SINGLE results file, specifying mode and k
 # Function to generate {task} on {dataset}-{split} for 1 {mode} and 1 {k} with {ranker} using llama
-def generate_llama(data, dataset, task, ranker, split, mode, k, model=None):
+def generate_llama(data, dataset, split, task, ranker, mode, k, model=None):
 
     # (hard coded these in for now, not sure if you want it to be adaptable)
     max_input_length=512
@@ -221,7 +245,7 @@ def generate_llama(data, dataset, task, ranker, split, mode, k, model=None):
 
     for profile in tqdm(data, desc=f'Generating for OUTPUT-{dataset}_{split}_{task}_LLAMA_{ranker}-{mode}_k{k}'):
         # Store user profile in a UserProfile object
-        p = UserProfile(profile, dataset, task, ranker, split)
+        p = UserProfile(profile, dataset, split, task, ranker)
 
         # Synthesize prompt from profile based on task, mode, k
         prompt = p.create_prompt(mode, k)
@@ -238,8 +262,8 @@ def generate_llama(data, dataset, task, ranker, split, mode, k, model=None):
         print(generation) # IF you want to watch as generations run
         results.append(generation)
 
-    # save results
-    save_results(results, dataset, task, ranker, split, mode, k, "LLAMA")
+    # save results (PROBABLY WILL CHANGE)
+    save_results(results, dataset, split, task, ranker, mode, k, "LLAMA")
 
     return
 
@@ -247,16 +271,17 @@ def generate_llama(data, dataset, task, ranker, split, mode, k, model=None):
 # not necessary anymore since now partial_generate() is capable of doing full
 '''
 # Function to specify model and generate EVERYTHING for this {dataset} {task}
-def full_generate(data, dataset, task, ranker, split, model):
+def full_generate(data, dataset, split, task, ranker, model):
     modes = ["none", "all", "user", "neighbor", "both"]
     k_values = [1, 2, 4]
 
-    partial_generate(data, dataset, task, ranker, split, model, modes, k_values)
+    partial_generate(data, dataset, split, task, ranker, model, modes, k_values)
 '''
 
 # Function to generate on a subset of modes and/or a subset of k values
 # Generates everything if modes+k_values are not specified
-def partial_generate(data, dataset, task, ranker, split, model, modes=["none", "all", "user", "neighbor", "both"], k_values=[1, 2, 4]):
+# def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "all", "user", "neighbor", "both"], k_values=[1, 2, 4]):
+def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "user", "neighbor", "both", "random"], k_values=[1, 2, 4]):
 
     # use gpt to generate for all mode-k combinations
     if model == "gpt":
@@ -268,7 +293,7 @@ def partial_generate(data, dataset, task, ranker, split, model, modes=["none", "
 
         for k in k_values:
             for mode in modes:
-                generate_gpt(data, dataset, task, ranker, split, mode, k, client=gpt_client)
+                generate_gpt(data, dataset, split, task, ranker, mode, k, client=gpt_client)
 
 
     # use llama to generate for all mode-k combinations
@@ -278,12 +303,11 @@ def partial_generate(data, dataset, task, ranker, split, model, modes=["none", "
 
         for k in k_values:
             for mode in modes:
-                generate_llama(data, dataset, task, ranker, split, mode, k, model=llama3_model)
-
+                generate_llama(data, dataset, split, task, ranker, mode, k, model=llama3_model)
 
 # Function to load data from a (ranking) JSON file
-# old example: b2w_data_dev_ranked_k_5_reviewText_bm25.json
-# new example: b2w_dev_reviewText_bm25.json
+# example: b2w_data_dev_ranked_k_5_reviewText_bm25.json
+
 '''
 #load data using old format
 def load_data(file_path):
@@ -300,28 +324,34 @@ def load_data(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
 
-    return data, dataset, task, ranker, split
+    return data, dataset, split, task, ranker
 '''
+
 
 #load data using new format
 def load_data(file_path):
     # pull filename from path
     filename = os.path.splitext(os.path.basename(file_path))[0]
 
+    # Remove the 'RANKED-' prefix
+    if filename.startswith("RANKING-"):
+        filename = filename[len("RANKING-"):]
+
     # parse run information from filename
     parsed = filename.split('_') # ['b2w', 'dev', 'reviewText', 'bm25']
 
     dataset = parsed[0]
+    split = parsed[1]
     task = parsed[2]
     ranker = parsed[3]
-    split = parsed[1]
+    
     with open(file_path, 'r') as file:
         data = json.load(file)
 
-    return data, dataset, task, ranker, split
+    return data, dataset, split, task, ranker
 
 
-def save_results(results, dataset, task, ranker, split, mode, k, model):
+def save_results(results, dataset, split, task, ranker, mode, k, model):
     directory = './results'
     filename = f'OUTPUT-{dataset}_{split}_{task}_{model}_{ranker}-{mode}_k{k}'
 
@@ -334,14 +364,11 @@ def save_results(results, dataset, task, ranker, split, mode, k, model):
 
     print(f"{model} results for {dataset}-{split}-{task} mode='{mode}' and k={k} on ranker='{ranker}' have been saved to {filepath}")
 
-    # below: FOR CJ
-    #!cp {filepath} /content/drive/MyDrive/
-
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Generation Pipeline")
     parser.add_argument('--input', type=str, required=True, help="Path to input data file")
     parser.add_argument('--model', type=str, choices=["gpt", "llama"], required=True, help="Model to use ('gpt' or 'llama')")
-    parser.add_argument('--mode', nargs='+', type=str, choices=["user", "neighbor", "both"], help="Mode(s) to generate on. Leave empty if all modes")
+    parser.add_argument('--mode', nargs='+', type=str, choices=["none", "random", "user", "neighbor", "both"], help="Mode(s) to generate on. Leave empty if all modes")
     parser.add_argument('--k', nargs='+', type=int, help="K-value(s) to generate on. Leave empty if all k")
 
     args = parser.parse_args()
@@ -359,17 +386,18 @@ def main():
 
     # load args, corresponding model, data
     args = parse_arguments()
-    data, dataset, task, ranker, split = load_data(args.input)
+    data, dataset, split, task, ranker = load_data(args.input)
 
 
     if args.mode and args.k: # specify mode and k
-        partial_generate(data, dataset, task, ranker, split, args.model, modes=args.mode, k_values=args.k)
+        partial_generate(data, dataset, split, task, ranker, args.model, modes=args.mode, k_values=args.k)
     elif args.mode: # specify mode
-        partial_generate(data, dataset, task, ranker, split, args.model, modes=args.mode)
+        partial_generate(data, dataset, split, task, ranker, args.model, modes=args.mode)
     elif args.k: # specify k
-        partial_generate(data, dataset, task, ranker, split, args.model, k_values=args.k)
+        partial_generate(data, dataset, split, task, ranker, args.model, k_values=args.k)
     else: # run every mode, every k
-        partial_generate(data, dataset, task, ranker, split, args.model)
+        partial_generate(data, dataset, split, task, ranker, args.model)
 
 if __name__ == "__main__":
     main()
+
