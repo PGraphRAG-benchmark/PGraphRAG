@@ -302,6 +302,8 @@ def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "
 
         for k in k_values:
             for mode in modes:
+                if mode in ['none', 'random'] and k in [2, 4]:
+                    continue
                 generate_gpt(data, dataset, split, task, ranker, mode, k, client=gpt_client)
 
 
@@ -312,6 +314,8 @@ def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "
 
         for k in k_values:
             for mode in modes:
+                if mode in ['none', 'random'] and k in [2, 4]:
+                    continue
                 generate_llama(data, dataset, split, task, ranker, mode, k, model=llama3_model)
 
 # Function to load data from a (ranking) JSON file
