@@ -20,11 +20,12 @@ This uses GPT to generate review text on the dev split of B2W, ranked by BM25 on
 
 - `--mode`: Mode(s) to generate on. **Optional**, default performs **all** modes.
   - Valid options:
-    - `all`: **(Deprecated?)** Retrieves "all_ratings" for the prompt.
+    ~~- `all`: **(Deprecated?)** Retrieves "all_ratings" for the prompt.~~
     - `none`: Retrieves nothing for the prompt.
     - `user`: Retrieves "user_ratings" for the prompt.
     - `neighbor`: Retrieves "neighbor_ratings" for the prompt.
     - `both`: Retrieves both "user_ratings" and "neighbor_ratings" for the prompt.
+    - `random`: Retrieves a random review from the dataset for the prompt.
 
 - `--k`: K-value(s) (top k retrieved reviews) to generate on. **Optional**, default performs **all** k. (`1, 2, 4`)
     - Valid options:
