@@ -22,15 +22,24 @@ class UserProfile:
         self.user_review_text = profile['user_review_text']
         self.user_review_title = profile.get('user_review_title', None)
 
-        self.user_ratings = []
-        for review in profile['user_ratings']:
-            self.user_ratings.append({"reviewTitle": review.get('reviewTitle', None), "reviewText": review.get("reviewText", None)})
+        self.user_ratings = [
+            {
+                "reviewTitle": review.get("reviewTitle", None),
+                "reviewText": review.get("reviewText", None),
+                "reviewRating": review.get("reviewRating", None)
+            }
+            for review in profile['user_ratings']
+        ]
 
-        self.neighbor_ratings = []
-        for review in profile['neighbor_ratings']:
-            self.neighbor_ratings.append({"reviewTitle": review.get('reviewTitle', None), "reviewText": review.get("reviewText", None)})
+        self.neighbor_ratings = [
+            {
+                "reviewTitle": review.get("reviewTitle", None),
+                "reviewText": review.get("reviewText", None),
+                "reviewRating": review.get("reviewRating", None)
+            }
+            for review in profile['neighbor_ratings']
+        ]
 
-        
         self.random_review = profile['random_review']
 
 
@@ -63,7 +72,7 @@ class UserProfile:
             retrieved = "User's Own Reviews:\n"
             for review in self.user_ratings[:k]:
                 rating = ""
-                if self.task == "reviewRating":
+                if review and self.task == "reviewRating":
                     rating += f", Review rating: {review['reviewRating']}"
 
                 context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
@@ -75,7 +84,7 @@ class UserProfile:
             retrieved = "Other Users' Reviews:\n"
             for review in self.neighbor_ratings[:k]:
                 rating = ""
-                if self.task == "reviewRating":
+                if review and self.task == "reviewRating":
                     rating += f", Review rating: {review['reviewRating']}"
 
                 context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
@@ -88,7 +97,7 @@ class UserProfile:
             review = self.random_review
 
             rating = ""
-            if self.task == "reviewRating":
+            if review and self.task == "reviewRating":
                 rating += f", Review rating: {review['reviewRating']}"
 
             context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"{rating}\n"
