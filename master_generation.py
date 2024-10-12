@@ -366,7 +366,7 @@ def load_data(file_path):
 
 def save_results(results, dataset, split, task, ranker, mode, k, model):
     directory = './results'
-    filename = f'OUTPUT-{dataset}_{split}_{task}_{model}_{ranker}-{mode}_k{k}'
+    filename = f'OUTPUT-{dataset}_{split}_{task}_{model}_{ranker}-{mode}_k{k}.json'
 
     if not os.path.exists(directory):
         os.makedirs(directory)
