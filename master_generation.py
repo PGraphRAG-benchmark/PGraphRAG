@@ -156,14 +156,18 @@ class UserProfile:
         prompt += retrieved_profiles
 
 
+        portuguese = ""
+        if self.dataset == "b2w":
+            portuguese += "in Portuguese "
+            
         # Set up directions based on task
         if self.task == "reviewTitle":
-            direction = "\nGenerate a title for the following product review from this user without any explanation: "
+            direction = f"\nGenerate a title {portuguese}for the following product review from this user without any explanation: "
             direction += self.get_review() # append reviewText for title generation
             direction += "Generate the review title in 10 words or less using the format: 'Review title:'."
 
         elif self.task == "reviewText": # ONLY FOR AMAZON AND B2W(, and yelp?)
-            direction = "\nGenerate a review for the following product from this user given the review title, without any explanation: "
+            direction = f"\nGenerate a review {portuguese}for the following product from this user given the review title, without any explanation: "
             direction += self.get_review() # append reviewTitle for text generation
             direction += "Generate the review text using the format: 'Review text:'."
 
