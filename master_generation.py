@@ -230,7 +230,9 @@ def generate_gpt(data, dataset, split, task, ranker, mode, k, client=None):
         # Feed prompt to GPT and store response
         generation = gpt_call(prompt, client)
         print(generation) # IF you want to watch as generations run
-        results.append(generation)
+        
+        #results.append(generation)
+        results.append({'user_id': p.user_id, 'output': generation})
 
     # save results (PROBABLY WILL CHANGE)
     save_results(results, dataset, split, task, ranker, mode, k, "GPT")
@@ -273,7 +275,9 @@ def generate_llama(data, dataset, split, task, ranker, mode, k, model=None):
         # Feed prompt to LLAMA and store response
         generation = model(llama_prompt, max_new_tokens=max_output_length, do_sample=True, return_full_text=False)
         print(generation) # IF you want to watch as generations run
-        results.append(generation)
+        
+        #results.append(generation)
+        results.append({'user_id': p.user_id, 'output': generation})
 
     # save results (PROBABLY WILL CHANGE)
     save_results(results, dataset, split, task, ranker, mode, k, "LLAMA")
