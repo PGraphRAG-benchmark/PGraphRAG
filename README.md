@@ -32,7 +32,7 @@ This uses GPT to generate review text on the dev split of B2W, ranked by BM25 on
     - `1`
     - `2` 
     - `4`
-    - `3, 5`: technically?
+  
 
 ## Examples
 
