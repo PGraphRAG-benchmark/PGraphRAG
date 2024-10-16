@@ -27,7 +27,7 @@ def install(package):
 install('pandas')
 # Specify the path to your CSV file
 
-file_path = '/home/opedirap/GrammarandProductReviews.csv'
+file_path = '/GrammarandProductReviews.csv'
 
 import pandas as pd
 
