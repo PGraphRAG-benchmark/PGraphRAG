@@ -27,7 +27,7 @@ def install(package):
 install('pandas')
 # Specify the path to your CSV file
 
-file_path = '/home/opedirap/B2W-Reviews01.csv'  # Update this path
+file_path = '/B2W-Reviews01.csv'  # Update this path
 
 def load_and_clean_csv(file_path):
     # Read the CSV file
