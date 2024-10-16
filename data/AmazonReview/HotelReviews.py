@@ -27,7 +27,7 @@ def install(package):
 install('pandas')
 # Specify the path to your CSV file
 
-file_path = 'Hotel_Reviews.csv' 
+file_path = '/Hotel_Reviews.csv' 
 num_users_train = 9000
 num_users_dev = 2500
 num_users_test = 2500
