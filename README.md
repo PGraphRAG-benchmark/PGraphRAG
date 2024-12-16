@@ -1,3 +1,13 @@
+# data
+Includes files to construct a dataset to a PGraph Framework
+GraphConstruction takes a data split JSON and forms the graph network. The data split is the needed file to run document ranking, and the graph construction is handled internally in the ranking script.
+
+# data_split
+Contains file for Ranking
+
+# data_rank 
+Returns the profile in a dictionary to run generations on based on tuned settings.
+
 # master_generation.py
 Script for creating generations on a dataset-task, using LLAMA or GPT.
 
