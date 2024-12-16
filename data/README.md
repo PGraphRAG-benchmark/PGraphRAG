@@ -28,5 +28,5 @@ This dataset is in Portuguese
 python script_name.py
 CSV files for each script can be downloaded from the following Google Drive link:
 
-[Download Reviews CSV Files](https://drive.google.com/drive/folders/1xAAJsLGaZQ-wySvmipbY7hCookr3piAm?usp=sharing)
+[Download Reviews CSV Files]
 
