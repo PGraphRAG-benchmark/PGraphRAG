@@ -8,7 +8,7 @@ We utilize four datasets in our project, each associated with a specific Python 
 - **Script**: `AmazonReviews.py`
 - **Dataset**: Amazon Reviews 
 - https://amazon-reviews-2023.github.io/
-- 
+  
 ### 2. B2W Reviews
 
 This dataset is in Portuguese
@@ -29,10 +29,11 @@ This dataset is in Portuguese
 - **Dataset**: Grammar and Product Reviews
 - https://www.kaggle.com/datasets/datafiniti/hotel-reviews
 
-```bash
-python script_name.py
-
 GraphConstruction.ipynb creates a data split into a respective graph in .json
 DatasetTemplate shows the data-creating process in a notebook for Amazon as an example.
+
+
+```bash
+python script_name.py
 
 
