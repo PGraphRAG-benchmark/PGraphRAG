@@ -43,14 +43,6 @@ class UserProfile:
         self.random_review = profile['random_review']
 
 
-        '''
-        # deprecated
-        self.all_ratings = []
-        for review in profile['all_ratings']:
-            self.all_ratings.append({"reviewTitle": review.get('reviewTitle', None), "reviewText": review.get("reviewText", None)})
-        '''
-
-
 
     # Retrieve relevant part of main review based on task, return as formatted string
     def get_review(self):
@@ -108,21 +100,6 @@ class UserProfile:
         elif mode == "none":
             return ""
 
-        
-
-        '''
-        # deprecated
-        elif mode == "all":
-            retrieved = "Other Users' Reviews:\n"
-            for review in self.all_ratings[:k]:
-
-                if self.dataset == "google":
-                    context = f"Review text: \"{review['reviewText']}\"\n"
-                else: # dataset == "amazon" or "b2w"
-                    context = f"Review title: \"{review['reviewTitle']}\", Review text: \"{review['reviewText']}\"\n"
-                retrieved += context
-            return retrieved
-        '''
 
     # Creates prompt for {task} on main review, with retrieval based on {mode} and {k}
     def create_prompt(self, mode, k):
@@ -132,8 +109,6 @@ class UserProfile:
         # Initialize intro based on mode
         if mode == "both":
             intro = "Given the following reviews from the same user and other users on the same product:\n"
-        # elif mode == "all":
-        #     intro = "Given the following reviews from any user on any product:\n"
         elif mode == "random":
             intro = "Given a random review from any user on any product:\n"
         elif mode == "user":
@@ -150,7 +125,7 @@ class UserProfile:
         if mode == "both":
             retrieved_profiles = f"{self.retrieve('user', k)}\n{self.retrieve('neighbor', k)}"
 
-        else: # mode in ["user", "neighbor", "none", "all"]
+        else: # mode in ["user", "neighbor", "none", "random"]
             retrieved_profiles = self.retrieve(mode, k)
 
         prompt += retrieved_profiles
@@ -174,7 +149,7 @@ class UserProfile:
         elif self.task == "reviewRating":
             direction = "\nGenerate an integer rating from 1-5 for the following product from this user given the review title and text, without any explanation: "
             direction += self.get_review() # append reviewTitle and reviewText for rating generation
-            direction += "Generate the review rating using the format: 'Rating:'."
+            direction += "Generate the integer review rating using the format: 'Rating:'."
 
         prompt += direction
 
@@ -192,7 +167,7 @@ def gpt_call(prompt, client):
                     {"role": "system", "content": "You are a personalized assistant, with the goal of providing users the best content using their preferences and the preferences of similar users."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.4  # temp change????????????
+                temperature=0.4 
             )
 
             # Extract and print the assistant's response from the first choice
@@ -234,7 +209,7 @@ def generate_gpt(data, dataset, split, task, ranker, mode, k, client=None):
         #results.append(generation)
         results.append({'user_id': p.user_id, 'output': generation})
 
-    # save results (PROBABLY WILL CHANGE)
+    # save results
     save_results(results, dataset, split, task, ranker, mode, k, "GPT")
 
 
@@ -245,7 +220,6 @@ def generate_gpt(data, dataset, split, task, ranker, mode, k, client=None):
 # Function to generate {task} on {dataset}-{split} for 1 {mode} and 1 {k} with {ranker} using llama
 def generate_llama(data, dataset, split, task, ranker, mode, k, model=None):
 
-    # (hard coded these in for now, not sure if you want it to be adaptable)
     max_input_length=512
     max_output_length=256
 
@@ -279,25 +253,15 @@ def generate_llama(data, dataset, split, task, ranker, mode, k, model=None):
         #results.append(generation)
         results.append({'user_id': p.user_id, 'output': generation})
 
-    # save results (PROBABLY WILL CHANGE)
+    # save results
     save_results(results, dataset, split, task, ranker, mode, k, "LLAMA")
 
     return
 
 
-# not necessary anymore since now partial_generate() is capable of doing full
-'''
-# Function to specify model and generate EVERYTHING for this {dataset} {task}
-def full_generate(data, dataset, split, task, ranker, model):
-    modes = ["none", "all", "user", "neighbor", "both"]
-    k_values = [1, 2, 4]
-
-    partial_generate(data, dataset, split, task, ranker, model, modes, k_values)
-'''
 
 # Function to generate on a subset of modes and/or a subset of k values
 # Generates everything if modes+k_values are not specified
-# def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "all", "user", "neighbor", "both"], k_values=[1, 2, 4]):
 def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "user", "neighbor", "both", "random"], k_values=[1, 2, 4]):
 
     # use gpt to generate for all mode-k combinations
@@ -326,30 +290,8 @@ def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "
                     continue
                 generate_llama(data, dataset, split, task, ranker, mode, k, model=llama3_model)
 
-# Function to load data from a (ranking) JSON file
-# example: b2w_data_dev_ranked_k_5_reviewText_bm25.json
 
-'''
-#load data using old format
-def load_data(file_path):
-    # pull filename from path
-    filename = os.path.splitext(os.path.basename(file_path))[0]
-
-    # parse run information from filename
-    parsed = filename.split('_') # ['b2w', 'data', 'dev', 'ranked', 'k', '5', 'reviewText', 'bm25'] # remove k5?????????? if so, use below function
-
-    dataset = parsed[0]
-    task = parsed[6]
-    ranker = parsed[7]
-    split = parsed[2]
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-
-    return data, dataset, split, task, ranker
-'''
-
-
-#load data using new format
+#load data
 def load_data(file_path):
     # pull filename from path
     filename = os.path.splitext(os.path.basename(file_path))[0]
@@ -359,7 +301,7 @@ def load_data(file_path):
         filename = filename[len("RANKING-"):]
 
     # parse run information from filename
-    parsed = filename.split('_') # ['b2w', 'dev', 'reviewText', 'bm25']
+    parsed = filename.split('_')
 
     dataset = parsed[0]
     split = parsed[1]

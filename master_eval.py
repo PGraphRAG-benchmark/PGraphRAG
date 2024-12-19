@@ -1,6 +1,3 @@
-!pip install evaluate
-!pip install rouge_score
-
 from collections import Counter
 from evaluate import load
 import tqdm
@@ -63,10 +60,6 @@ def clean_data(golds, preds, task):
     clean_golds = []
     clean_preds = []
 
-    if isinstance(preds[0], str): # just future proofing
-        flag = 'str'
-    else:
-        flag = 'obj'
 
     if task == 'reviewText':
         field = 'user_review_text'
@@ -75,35 +68,18 @@ def clean_data(golds, preds, task):
     elif task == 'reviewRating':
         field = 'user_review_rating'
 
-    if flag == 'str': # user id not included
 
-        for i, pred in enumerate(preds):
-            # cleaned.append({"gold": golds[i][field].strip(), "pred": extract_prediction(pred, task)})
-            clean_golds.append(golds[i][field].strip())
-            clean_preds.append(extract_prediction(pred, task))
-
-    else: # user id included
-
-        for i, pred in enumerate(preds):
-            # cleaned.append({"id": pred['user_id'], "gold": golds[i][field].strip(), "pred": extract_prediction(pred["output"], task)})
-            clean_golds.append(golds[i][field].strip())
-            clean_preds.append(extract_prediction(pred["output"], task))
+    for i, pred in enumerate(preds):
+        clean_golds.append(golds[i][field].strip())
+        clean_preds.append(extract_prediction(pred["output"], task))
 
     return clean_golds, clean_preds
 
 def full_eval(golds, preds, mode_k, rouge, meteor):
-    # rouge = load('rouge')
-    # meteor = load('meteor')
 
     rouge_results = rouge.compute(predictions=preds, references=golds)
     meteor_results = meteor.compute(predictions=preds, references=golds)
 
-    # results = {
-    #     "mode_k": mode_k,
-    #     "rouge-1": round(rouge_results["rouge1"], 3),
-    #     "rouge-L": round(rouge_results["rougeL"], 3),
-    #     "meteor": round(meteor_results["meteor"], 3)
-    # }
 
     results = [
         mode_k, 
