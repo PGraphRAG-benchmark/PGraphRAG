@@ -1,4 +1,4 @@
-*.json
 *.pkl
 data/MovieLens/
 .ipynb_checkpoints/
+bfg-1.14.0.jar
