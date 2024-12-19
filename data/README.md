@@ -30,7 +30,8 @@ This dataset is in Portuguese
 - https://www.kaggle.com/datasets/datafiniti/hotel-reviews
 
 GraphConstruction.ipynb creates a data split into a respective graph in .json
-DatasetTemplate shows the data-creating process in a notebook for Amazon as an example.
+DatasetTemplate.ipynb shows the data-creating process in a notebook for Amazon as an example.
+Dataset_Loader.ipynb has the condensed version to load all 4 datasets for datasplits. WIP
 
 
 ```bash
