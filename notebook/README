@@ -1,0 +1,4 @@
+These are the notebook forms of the main framework.
+
+approaches.ipynb creates all the ranking files to run generation. Only works for Amazon dataset, need to hardcode the matching dictionary values. WIP for py script.
+ranking.ipynb is a duplicate of approaches.ipynb
