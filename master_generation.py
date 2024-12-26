@@ -162,7 +162,7 @@ def gpt_call(prompt, client):
 
         try:
             response = client.chat.completions.create(
-                model= "gpt-4o-mini-20240718",
+                model= "gpt-4o-mini-20240718", # REPLACE with your model that you want to run generation
                 messages=[
                     {"role": "system", "content": "You are a personalized assistant, with the goal of providing users the best content using their preferences and the preferences of similar users."},
                     {"role": "user", "content": prompt}
@@ -188,7 +188,7 @@ def generate_gpt(data, dataset, split, task, ranker, mode, k, client=None):
 
     if not client:
         client = AzureOpenAI(
-            azure_endpoint = "https://vietgpt.openai.azure.com/",
+            azure_endpoint = "https://vietgpt.openai.azure.com/", #Replace with your endpoint
             api_key=userdata.get('AZURE_KEY'),
             api_version="2024-02-15-preview"
             )

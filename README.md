@@ -1,3 +1,6 @@
+# general
+The benchmark framework is divided into 3 parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be ran, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Refer to data/dataset_template.ipynb for an example how the data is made to ensure product, neighbor, and user size distribution. Refer to notebook/ranking.ipynb for how the files are ranked. This framework ISNT set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
+
 # data
 Includes files to construct a dataset to a PGraph Framework
 GraphConstruction takes a data split JSON and forms the graph network. The data split is the needed file to run document ranking, and the graph construction is handled internally in the ranking script.
