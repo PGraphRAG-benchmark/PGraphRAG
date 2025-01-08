@@ -78,3 +78,19 @@ To run the script:
 python master_eval.py --ranking ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --results ./results/amazon_dev_reviewText_GPT_bm25
 ```
 Evaluates all OUTPUT files in the given results directory against gold labels taken from given ranking file.
+
+## Reference
+
+For reference please cite the following:
+
+```bash
+@misc{au2025personalizedgraphbasedretrievallarge,
+      title={Personalized Graph-Based Retrieval for Large Language Models}, 
+      author={Steven Au and Cameron J. Dimacali and Ojasmitha Pedirappagari and Namyong Park and Franck Dernoncourt and Yu Wang and Nikos Kanakaris and Hanieh Deilamsalehy and Ryan A. Rossi and Nesreen K. Ahmed},
+      year={2025},
+      eprint={2501.02157},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2501.02157}, 
+}
+```
