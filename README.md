@@ -1,8 +1,31 @@
-# Personalized Graph-Based Retrieval for LLMs Benchmark 
+<div align=center>
+<h1>Personalized Graph-Based Retrieval for LLMs Benchmark</h1>
+
+ [![arXiv](https://img.shields.io/badge/arXiv-2501.02157-b31b1b.svg)](https://arxiv.org/abs/2501.02157)
+ [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Farxiv.org%2Fabs%2F2501.02157&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+<div>
+      <b>Steven Au</b><sup>1</sup>,
+      <b>Cameron J. Dimacali</b><sup>1</sup>,
+      <b>Ojasmitha Pedirappagari</b><sup>1</sup>,
+      <b>Namyong Park</b><sup>2</sup>,
+      <b>Franck Dernoncourt</b><sup>3</sup>,
+      <b>Yu Wang</b><sup>4</sup>,
+      <b>Nikos Kanakaris</b><sup>5</sup>,
+      <b>Hanieh Deilamsalehy</b><sup>3</sup>
+      <b>Ryan A. Rossi</b><sup>3</sup>,
+      <b>Nesreen K. Ahmed</b><sup>6</sup>
+    <div>
+    <sup>1</sup>University of California Santa Cruz, <sup>2</sup>Meta AI, <sup>3</sup>Adobe Research,
+<sup>4</sup>University of Oregon, <sup>5</sup>University of Southern California, <sup>6</sup>Cisco AI Research
+    </div>
+</div>
+</div>
+
 
 Personalized Graph-Based Retrieval for Large Language Models: https://arxiv.org/abs/2501.02157
 
-As large language models (LLMs) evolve, their ability to deliver personalized and contextaware responses offers transformative potential for improving user experiences. We propose Personalized Graph-based Retrieval-Augmented Generation (PGraphRAG), a framework and benchmark that leverages user-centric knowledge graphs to enrich personalization. By directly integrating structured user knowledge into the retrieval process and augmenting prompts with user-relevant context, PGraphRAG enhances contextual understanding and output quality. This benchmark is designed to evaluate personalized text generation tasks in real-world settings where user history is sparse or unavailable. 
+As large language models (LLMs) evolve, their ability to deliver personalized and context-aware responses offers transformative potential for improving user experiences. We propose Personalized Graph-based Retrieval-Augmented Generation (PGraphRAG), a framework and benchmark that leverages user-centric knowledge graphs to enrich personalization. By directly integrating structured user knowledge into the retrieval process and augmenting prompts with user-relevant context, PGraphRAG enhances contextual understanding and output quality. This benchmark is designed to evaluate personalized text generation tasks in real-world settings where user history is sparse or unavailable. 
 
 
 
@@ -94,7 +117,7 @@ Evaluates all OUTPUT files in the given results directory against gold labels ta
 
 For reference please cite the following:
 
-```bash
+```bibtex
 @misc{au2025personalizedgraphbasedretrievallarge,
       title={Personalized Graph-Based Retrieval for Large Language Models}, 
       author={S. Au, C.J. Dimacali, O. Pedirappagari, N. Park, F. Dernoncourt, Y. Wang, N. Kanakaris, H. Deilamsalehy, R.A. Rossi, N.K. Ahmed},
