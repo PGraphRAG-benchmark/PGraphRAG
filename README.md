@@ -1,5 +1,10 @@
-# general
-The benchmark framework is divided into 3 parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be ran, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Refer to data/dataset_template.ipynb for an example how the data is made to ensure product, neighbor, and user size distribution. Refer to notebook/ranking.ipynb for how the files are ranked. This framework ISNT set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
+# Personalized Graph-Based Retrieval for LLMs Benchmark 
+
+Personalized Graph-Based Retrieval for Large Language Models: https://arxiv.org/abs/2501.02157
+
+As large language models (LLMs) evolve, their ability to deliver personalized and contextaware responses offers transformative potential for improving user experiences. We propose Personalized Graph-based Retrieval-Augmented Generation (PGraphRAG), a framework and benchmark that leverages user-centric knowledge graphs to enrich personalization. By directly integrating structured user knowledge into the retrieval process and augmenting prompts with user-relevant context, PGraphRAG enhances contextual understanding and output quality. This benchmark is designed to evaluate personalized text generation tasks in real-world settings where user history is sparse or unavailable. 
+
+The benchmark framework is divided into three parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be executed, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Please refer to data/dataset_template.ipynb for an example how the data is made to ensure product, neighbor, and user size distribution. Please refer to notebook/ranking.ipynb for how the files are ranked. This framework is not set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
 
 # data
 Includes files to construct a dataset to a PGraph Framework
@@ -86,7 +91,7 @@ For reference please cite the following:
 ```bash
 @misc{au2025personalizedgraphbasedretrievallarge,
       title={Personalized Graph-Based Retrieval for Large Language Models}, 
-      author={Steven Au and Cameron J. Dimacali and Ojasmitha Pedirappagari and Namyong Park and Franck Dernoncourt and Yu Wang and Nikos Kanakaris and Hanieh Deilamsalehy and Ryan A. Rossi and Nesreen K. Ahmed},
+      author={S. Au, C.J. Dimacali, O. Pedirappagari, N. Park, F. Dernoncourt, Y. Wang, N. Kanakaris, H. Deilamsalehy, R.A. Rossi, N.K. Ahmed},
       year={2025},
       eprint={2501.02157},
       archivePrefix={arXiv},
