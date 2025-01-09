@@ -119,7 +119,7 @@ Evaluates all OUTPUT files in the given results directory against gold labels ta
 For reference please cite the following:
 
 ```bibtex
-@misc{au2025personalizedgraphbasedretrievallarge,
+@misc{pgraphrag,
       title={Personalized Graph-Based Retrieval for Large Language Models}, 
       author={S. Au, C.J. Dimacali, O. Pedirappagari, N. Park, F. Dernoncourt, Y. Wang, N. Kanakaris, H. Deilamsalehy, R.A. Rossi, N.K. Ahmed},
       year={2025},
