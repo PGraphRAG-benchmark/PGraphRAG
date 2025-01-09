@@ -15,9 +15,7 @@
       <b>Hanieh Deilamsalehy</b>,
       <b>Ryan A. Rossi</b>,
       <b>Nesreen K. Ahmed</b>
-    <div>
     
-    </div>
 </div>
 </div>
 
