@@ -19,10 +19,13 @@
 </div>
 </div>
 
-
+<br>
 <div>
 Personalized Graph-Based Retrieval for Large Language Models: https://arxiv.org/abs/2501.02157
+</div>
+<br>
 
+ <div>
 As large language models (LLMs) evolve, their ability to deliver personalized and context-aware responses offers transformative potential for improving user experiences. We propose Personalized Graph-based Retrieval-Augmented Generation (PGraphRAG), a framework and benchmark that leverages user-centric knowledge graphs to enrich personalization. By directly integrating structured user knowledge into the retrieval process and augmenting prompts with user-relevant context, PGraphRAG enhances contextual understanding and output quality. This benchmark is designed to evaluate personalized text generation tasks in real-world settings where user history is sparse or unavailable. 
 </div>
 
