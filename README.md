@@ -16,8 +16,8 @@
       <b>Ryan A. Rossi</b><sup>3</sup>,
       <b>Nesreen K. Ahmed</b><sup>6</sup>
     <div>
-    <sup>1</sup>University of California Santa Cruz, <sup>2</sup>Meta AI, <sup>3</sup>Adobe Research,
-<sup>4</sup>University of Oregon, <sup>5</sup>University of Southern California, <sup>6</sup>Cisco AI Research
+    <sup>1</sup>U. of California Santa Cruz, <sup>2</sup>Meta AI, <sup>3</sup>Adobe Research,
+<sup>4</sup>U. of Oregon, <sup>5</sup>U. of Southern California, <sup>6</sup>Cisco AI Research
     </div>
 </div>
 </div>
