@@ -5,19 +5,18 @@
  [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Farxiv.org%2Fabs%2F2501.02157&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 <div>
-      <b>Steven Au</b><sup>1</sup>,
-      <b>Cameron J. Dimacali</b><sup>1</sup>,
-      <b>Ojasmitha Pedirappagari</b><sup>1</sup>,
-      <b>Namyong Park</b><sup>2</sup>,
-      <b>Franck Dernoncourt</b><sup>3</sup>,
-      <b>Yu Wang</b><sup>4</sup>,
-      <b>Nikos Kanakaris</b><sup>5</sup>,
-      <b>Hanieh Deilamsalehy</b><sup>3</sup>
-      <b>Ryan A. Rossi</b><sup>3</sup>,
-      <b>Nesreen K. Ahmed</b><sup>6</sup>
+      <b>Steven Au</b>,
+      <b>Cameron J. Dimacali</b>,
+      <b>Ojasmitha Pedirappagari</b>,
+      <b>Namyong Park</b>,
+      <b>Franck Dernoncourt</b>,
+      <b>Yu Wang</b>,
+      <b>Nikos Kanakaris</b>,
+      <b>Hanieh Deilamsalehy</b>,
+      <b>Ryan A. Rossi</b>,
+      <b>Nesreen K. Ahmed</b>
     <div>
-    <sup>1</sup>U. of California Santa Cruz, <sup>2</sup>Meta AI, <sup>3</sup>Adobe Research,
-<sup>4</sup>U. of Oregon, <sup>5</sup>U. of Southern California, <sup>6</sup>Cisco AI Research
+    
     </div>
 </div>
 </div>
