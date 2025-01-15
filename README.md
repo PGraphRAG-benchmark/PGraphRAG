@@ -1,7 +1,10 @@
 <div align=center>
 <h1>Personalized Graph-Based Retrieval for LLMs Benchmark</h1>
 
+
+
  [![website](https://img.shields.io/badge/website-blue)](https://pgraphrag-benchmark.github.io)
+[![Hugging Face Paper](https://img.shields.io/badge/HuggingFace-Paper-blue)](https://huggingface.co/papers/2501.02157)
  [![arXiv](https://img.shields.io/badge/arXiv-2501.02157-b31b1b.svg)](https://arxiv.org/abs/2501.02157)
  [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Farxiv.org%2Fabs%2F2501.02157&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
