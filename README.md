@@ -36,9 +36,18 @@ As large language models (LLMs) evolve, their ability to deliver personalized an
 
 ![ ](/pgraphrag-fig.png)
 
+---
 
+The benchmark framework is divided into three parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be executed, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Please refer to data/dataset_template.ipynb for an example of how the data is made to ensure product, neighbor, and user size distribution. Please refer to notebook/ranking.ipynb for how the files are ranked. This framework is not set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
 
-The benchmark framework is divided into three parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be executed, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Please refer to data/dataset_template.ipynb for an example how the data is made to ensure product, neighbor, and user size distribution. Please refer to notebook/ranking.ipynb for how the files are ranked. This framework is not set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
+### Installation
+
+To install the necessary dependencies, run:
+
+```bash
+pip install -r requirements.tx
+
+Note this is not necessary to run you own LLM models, we ran Llama-3.1-8b-instruct on our own hardware and GPT-4o-mini through Azure cloud services.
 
 # data
 Includes files to construct a dataset to a PGraph Framework
