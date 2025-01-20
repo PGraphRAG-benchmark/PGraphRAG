@@ -46,7 +46,7 @@ To install the necessary dependencies, run:
 
 ```bash
 pip install -r requirements.tx
-
+```
 Note this is not necessary to run you own LLM models, we ran Llama-3.1-8b-instruct on our own hardware and GPT-4o-mini through Azure cloud services.
 
 # data
