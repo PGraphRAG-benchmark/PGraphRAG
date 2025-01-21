@@ -40,7 +40,34 @@ As large language models (LLMs) evolve, their ability to deliver personalized an
 
 The benchmark framework is divided into three parts; dataset construction, document ranking, and LLM generation. They are all standalone files that can be executed, but this repo has the constructed splits, and ranked files if you to go ahead in the pipeline. Please refer to data/dataset_template.ipynb for an example of how the data is made to ensure product, neighbor, and user size distribution. Please refer to notebook/ranking.ipynb for how the files are ranked. This framework is not set up to run everything at once. master_generation.py was converted to CLI to run files but will require your own API key or endpoint.
 
-### Installation
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Clone the Repository](#clone-the-repository)
+  - [Install Dependencies](#install-dependencies)
+- [Data Structure](#data-structure)
+  - [Data](#data)
+  - [Data Split](#data-split)
+  - [Data Rank](#data-rank)
+- [Usage](#usage)
+  - [Master Generation Script](#master-generation-script)
+  - [Arguments](#arguments)
+  - [Examples](#examples)
+  - [Master Evaluation Script](#master-evaluation-script)
+- [Reference](#reference)
+
+
+---
+
+## Getting Started
+
+### Clone the Repository
+
+```bash
+gh repo clone PGraphRAG-benchmark/PGraphRAG
+cd PGraphRAG-benchmark/PGraphRAG
+
+### Install Dependencies
 
 To install the necessary dependencies, run:
 
@@ -49,27 +76,39 @@ pip install -r requirements.tx
 ```
 Note this is not necessary to run you own LLM models, we ran Llama-3.1-8b-instruct on our own hardware and GPT-4o-mini through Azure cloud services.
 
-# data
-Includes files to construct a dataset to a PGraph Framework
-GraphConstruction takes a data split JSON and forms the graph network. The data split is the needed file to run document ranking, and the graph construction is handled internally in the ranking script.
+---
 
-# data_split
-Contains file for Ranking
+## Data Structure
 
-# data_rank 
+### Data
+
+Includes files to construct a dataset for the PGraph Framework. The `GraphConstruction` script processes a data split JSON and forms the graph network. This is a required step to run document ranking, and the graph construction is handled internally in the ranking script.
+
+### Data Split
+
+Contains files for ranking.
+
+### Data Rank
+
 Returns the profile in a dictionary to run generations on based on tuned settings.
 
-# master_generation.py
-Script for creating generations on a dataset-task, using LLAMA or GPT.
+---
 
 ## Usage
-To run the script:
+
+### Master Generation Script
+
+The `master_generation.py` script is used to generate outputs for dataset tasks using LLMs like Llama-3.1-8B-Instruct or GPT.
+
+#### To run the script:
+
 ```bash
 python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt
 ```
-This uses GPT to generate review text on the dev split of Amazon reviews (User Product Review Generation), ranked by BM25 on all modes, on all k.
 
+This example uses GPT to generate review text on the dev split of Amazon reviews (User Product Review Generation), ranked by BM25 on all modes and all k values.
 
+---
 ## Arguments
 
 - `--input`: File path to the ranking file. **Required.**
@@ -88,45 +127,49 @@ This uses GPT to generate review text on the dev split of Amazon reviews (User P
     - `both`: Retrieves both "user_ratings" and "neighbor_ratings" for the prompt.
 
 
-- `--k`: K-value(s) (top k retrieved reviews) to generate on. **Optional**, default performs **all** k. (`1, 2, 4`)
-    - Valid options:
-    - `1`
-    - `2` 
-    - `4`
-  
+- `--k`: K-value(s) (top k retrieved reviews) to generate on. **Optional**, default performs **all** k (`1, 2, 4`).
 
-## Examples
+### Examples
 
-Full dataset-task generation:
+#### Full dataset-task generation:
+
 ```bash
 python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt
 ```
 
-Generation on a subset of modes (both, neighbor), (all k):
+#### Generation on a subset of modes (`both`, `neighbor`), (all k):
+
 ```bash
-python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt --mode both neighbor 
+python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt --mode both neighbor
 ```
 
-Generation on a subset of k (1), (all modes):
+#### Generation on a subset of k (`1`), (all modes):
+
 ```bash
 python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt --k 1
 ```
 
-Generation on a subset of modes and subset of k (none_k2, none_k4, both_k2, both_k4):
+#### Generation on a subset of modes and subset of k (`none_k2`, `none_k4`, `both_k2`, `both_k4`):
+
 ```bash
 python master_generation.py --input ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --model gpt --mode none both --k 2 4
 ```
 
-# master_eval.py
-Script for evaluating batches of OUTPUT files.
+---
 
-## Usage
-To run the script:
+### Master Evaluation Script
+
+The `master_eval.py` script evaluates batches of output files.
+
+#### To run the script:
+
 ```bash
 python master_eval.py --ranking ./data/Rankings/Amazon/amazon_dev_reviewText_bm25.json --results ./results/amazon_dev_reviewText_GPT_bm25
 ```
-Evaluates all OUTPUT files in the given results directory against gold labels taken from given ranking file.
 
+This evaluates all output files in the given results directory against gold labels taken from the specified ranking file.
+
+---
 ## Reference
 
 For reference please cite the following:
