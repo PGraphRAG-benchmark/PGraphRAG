@@ -1,5 +1,5 @@
 <div align=center>
-<h1>Personalized Graph-Based Retrieval for LLMs Benchmark</h1>
+<h1>Personalized Graph-Based Retrieval Benchmark for LLMs </h1>
 
 
 
@@ -25,7 +25,7 @@
 
 <br>
 <div>
-Personalized Graph-Based Retrieval for Large Language Models: https://arxiv.org/abs/2501.02157
+Check our paper on Personalized Graph-Based Retrieval for Large Language Models at https://arxiv.org/abs/2501.02157
 </div>
 <br>
 
