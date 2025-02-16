@@ -6,7 +6,7 @@ bfg-1.14.0.jar
 metric/
 results/
 results_norank_k4/
-evalution_results.csv
-master_eval3.py
+evaluation_results.csv
+master_eval_3.py
 master_generation_2.py
 master_generation_no_2.py
