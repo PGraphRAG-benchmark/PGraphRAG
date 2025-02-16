@@ -4,7 +4,7 @@ import time
 import torch
 import json
 from openai import AzureOpenAI
-from google.colab import userdata
+# from google.colab import userdata
 import os
 import argparse
 import sys
@@ -41,8 +41,6 @@ class UserProfile:
         ]
 
         self.random_review = profile['random_review']
-
-
 
     # Retrieve relevant part of main review based on task, return as formatted string
     def get_review(self):
@@ -268,7 +266,8 @@ def partial_generate(data, dataset, split, task, ranker, model, modes=["none", "
     if model == "gpt":
         gpt_client = AzureOpenAI(
             azure_endpoint = "https://vietgpt.openai.azure.com/",
-            api_key=userdata.get('AZURE_KEY'),
+            api_key=os.environ.get("AZURE_KEY"),
+            # api_key=userdata.get('AZURE_KEY'),
             api_version="2024-02-15-preview"
             )
 
